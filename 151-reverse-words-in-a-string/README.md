@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 8 ms (37.42%) | Memory: 44.4 MB (57.33%) - LeetSync
 
 <p>Given an input string <code>s</code>, reverse the order of the <strong>words</strong>.</p>
 
