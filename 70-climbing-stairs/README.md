@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 8 MB (55.32%) - LeetSync
 
 <p>You are climbing a staircase. It takes <code>n</code> steps to reach the top.</p>
 
