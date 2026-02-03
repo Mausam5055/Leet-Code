@@ -1,3 +1,5 @@
+Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+
 <p>Given an unsorted integer array <code>nums</code>. Return the <em>smallest positive integer</em> that is <em>not present</em> in <code>nums</code>.</p>
 
 <p>You must implement an algorithm that runs in <code>O(n)</code> time and uses <code>O(1)</code> auxiliary space.</p>
