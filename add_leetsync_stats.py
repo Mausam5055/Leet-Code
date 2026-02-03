@@ -30,12 +30,35 @@ def git_commit_folder(folder_path, message):
     """
     Stage and commit a specific folder with the given message.
     """
-    # 1. Add the folder
-    success, _, err = run_command(f'git add "{folder_path}"')
-    if not success:
-        print(f"    ⚠ Git add failed: {err.strip()}")
-        return False
+    # 1. Add specific files (more robust than adding folder)
+    files_to_add = ["README.md", "desktop.ini"]
+    added_something = False
+    
+    for filename in files_to_add:
+        file_path = os.path.join(folder_path, filename)
+        if os.path.exists(file_path):
+            # Use relative path for git add to avoid path separator issues
+            # Git on Windows prefers relative paths or forward slashes
+            try:
+                rel_path = os.path.relpath(file_path, os.getcwd())
+            except ValueError:
+                rel_path = file_path # Fallback if on different drive
+                
+            success, out, err = run_command(f'git add "{rel_path}"')
+            if not success:
+               print(f"    ⚠ Git add failed for {filename}: {err.strip()} {out.strip()}")
+            else:
+               added_something = True
 
+    # Also add the solution file if possible (heuristic)
+    # We can just try 'git add folder' as a fallback/catch-all
+    try:
+        rel_folder = os.path.relpath(folder_path, os.getcwd())
+    except ValueError:
+        rel_folder = folder_path
+
+    success, out, err = run_command(f'git add "{rel_folder}"')
+    
     # 2. Commit with message
     # escape double quotes in message just in case
     safe_message = message.replace('"', '\\"')
@@ -47,7 +70,21 @@ def git_commit_folder(folder_path, message):
         if "nothing to commit" in out or "nothing to commit" in err:
             print("    ○ Nothing to commit")
         else:
-            print(f"    ⚠ Git commit failed: {err.strip()}")
+            print(f"    ⚠ Git commit failed: OUT=[{out.strip()}] ERR=[{err.strip()}]")
+        return False
+
+def git_push():
+    """
+    Push changes to remote repository.
+    """
+    print("\n⬆ Pushing changes to remote...")
+    success, out, err = run_command('git push')
+    
+    if success:
+        print("  ✓ Push successful")
+        return True
+    else:
+        print(f"  ✗ Push failed: {err.strip()}")
         return False
 
 def get_headers(leetcode_session, csrf_token):
@@ -379,6 +416,11 @@ def main():
         help='Git commit each folder with the stats message'
     )
     parser.add_argument(
+        '--push',
+        action='store_true',
+        help='Git push changes after committing'
+    )
+    parser.add_argument(
         '--session',
         type=str,
         help='LEETCODE_SESSION cookie'
@@ -446,6 +488,8 @@ def main():
     print("  2. Create desktop.ini files for folder tooltips (Windows)")
     if args.commit:
         print("  3. git add & commit each folder with stats message")
+    if args.push:
+        print("  4. push changes to remote repository")
     
     print("\nSources:")
     if headers: print("  • LeetCode API (Real-time)")
@@ -455,6 +499,10 @@ def main():
     response = input("\n❓ Continue? (y/n): ").strip().lower()
     if response == 'y':
         process_folders(stats_dict, args.placeholder, args.commit, headers, solved_map)
+        
+        if args.push:
+            git_push()
+            
         print("✅ Done!\n")
     else:
         print("\n❌ Aborted.\n")

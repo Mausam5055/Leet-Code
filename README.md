@@ -83,25 +83,40 @@ git clone https://github.com/Mausam5055/Leet-Code.git
 cd Leet-Code
 ```
 
-### Sync Your Own LeetCode Solutions
+### 🔄 Sync & Update Stats
 
-This repository includes a **Python sync script** to automatically download your LeetCode submissions:
+This repository includes scripts to automate your workflow:
+
+#### 1. Download Solutions
+
+Use `leetcode_sync.py` to download your submissions:
 
 ```bash
 python leetcode_sync.py
 ```
 
+#### 2. Add Stats & Commit (LeetSync Style)
+
+Use `add_leetsync_stats.py` to fetch runtime/memory stats and commit changes with a descriptive message:
+
+```bash
+python add_leetsync_stats.py --session <LEETCODE_SESSION> --csrftoken <CSRF_TOKEN> --commit --push
+```
+
+**Features:**
+
+- Fetches real-time stats from LeetCode API
+- Updates `README.md` with stats header
+- Creates `desktop.ini` for folder tooltips (Windows)
+- Commits changes with message format: `Time: 3 ms (96.57%) | Memory: 42.5 MB (62.53%) - LeetSync`
+- Optional: pushes changes to remote repository (`--push`)
+
 **Requirements:**
 
 1. Python 3.x
-2. Your LeetCode session cookies (`LEETCODE_SESSION` and `csrftoken`)
-
-**How to get cookies:**
-
-1. Log in to [leetcode.com](https://leetcode.com)
-2. Open Browser DevTools (F12)
-3. Go to **Application** → **Cookies** → `https://leetcode.com`
-4. Copy the values for `LEETCODE_SESSION` and `csrftoken`
+2. LeetCode Cookies from [leetcode.com](https://leetcode.com) (DevTools → Application → Cookies):
+   - `LEETCODE_SESSION`
+   - `csrftoken`
 
 ---
 
