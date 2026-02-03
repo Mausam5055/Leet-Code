@@ -1,2 +1,2 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 4 ms (98.30%) | Memory: 44.5 MB (67.05%) - LeetSync
 
