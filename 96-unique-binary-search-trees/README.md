@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 152.3 MB (50.00%) - LeetSync
 
 <p>Given an integer <code>n</code>, return <em>the number of structurally unique <strong>BST&#39;</strong>s (binary search trees) which has exactly </em><code>n</code><em> nodes of unique values from</em> <code>1</code> <em>to</em> <code>n</code>.</p>
 
