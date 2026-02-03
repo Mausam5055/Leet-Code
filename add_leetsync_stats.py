@@ -290,7 +290,7 @@ def process_folders(stats_dict=None, use_placeholder=True, do_commit=False, head
                 # Fetch latest submission
                 try:
                     # Rate limit slightly
-                    time.sleep(0.5)
+                    time.sleep(1.0) # Increased delay to 1s
                     sub = get_latest_submission(headers, api_slug)
                     if sub:
                         details = get_submission_details(headers, sub['id'])
@@ -312,8 +312,14 @@ def process_folders(stats_dict=None, use_placeholder=True, do_commit=False, head
                             
                             has_stats = True
                             print(f"  ✓ Fetched stats: Time {time_ms}ms ({time_percent}%) | Mem {memory_mb}MB ({memory_percent}%)")
+                        else:
+                            print(f"  ⚠ No details found for submission {sub['id']}")
+                    else:
+                        print(f"  ⚠ No accepted submission found for {api_slug}")
                 except Exception as e:
                     print(f"  ⚠ API Error for {folder}: {e}")
+            else:
+                print(f"  ⚠ Problem ID {prob_id} not found in solved list")
 
         # 2. Fallback to local stats file
         if not has_stats and stats_dict and folder in stats_dict:
