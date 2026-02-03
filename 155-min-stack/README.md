@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 5 ms (83.36%) | Memory: 46.7 MB (94.60%) - LeetSync
 
 <p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
 
