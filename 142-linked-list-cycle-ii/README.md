@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 46.9 MB (9.79%) - LeetSync
 
 <p>Given the <code>head</code> of a linked list, return <em>the node where the cycle begins. If there is no cycle, return </em><code>null</code>.</p>
 
