@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 31 ms (50.00%) | Memory: 149.7 MB (100.00%) - LeetSync
 
 <p>We can scramble a string s to get a string t using the following algorithm:</p>
 
