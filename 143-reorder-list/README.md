@@ -1,3 +1,5 @@
+Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+
 <p>You are given the head of a singly linked-list. The list can be represented as:</p>
 
 <pre>
