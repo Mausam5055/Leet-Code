@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 47.1 MB (11.37%) - LeetSync
 
 <p>Given <code>head</code>, the head of a linked list, determine if the linked list has a cycle in it.</p>
 
