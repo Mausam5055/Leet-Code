@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 1 ms (98.58%) | Memory: 45.7 MB (32.03%) - LeetSync
 
 <p>You are given an array of integers <code>nums</code> of length <code>n</code>.</p>
 
