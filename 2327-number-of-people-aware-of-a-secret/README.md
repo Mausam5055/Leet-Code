@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 3 ms (96.57%) | Memory: 42.5 MB (62.53%) - LeetSync
 
 <p>On day <code>1</code>, one person discovers a secret.</p>
 
