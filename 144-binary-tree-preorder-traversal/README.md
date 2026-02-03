@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 43.1 MB (81.88%) - LeetSync
 
 <p>Given the <code>root</code> of a binary tree, return <em>the preorder traversal of its nodes&#39; values</em>.</p>
 
