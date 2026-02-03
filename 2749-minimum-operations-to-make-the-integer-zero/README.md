@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 1 ms (93.45%) | Memory: 42.6 MB (22.07%) - LeetSync
 
 <p>You are given two integers <code>num1</code> and <code>num2</code>.</p>
 
