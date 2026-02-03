@@ -1,3 +1,5 @@
+Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+
 <p>Given <code>n</code> pairs of parentheses, write a function to <em>generate all combinations of well-formed parentheses</em>.</p>
 
 <p>&nbsp;</p>
