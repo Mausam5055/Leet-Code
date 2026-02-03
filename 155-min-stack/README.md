@@ -1,3 +1,5 @@
+Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+
 <p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
 
 <p>Implement the <code>MinStack</code> class:</p>
