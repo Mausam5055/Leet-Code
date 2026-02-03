@@ -1,3 +1,5 @@
+Time: 3 ms (96.57%) | Memory: 42.5 MB (62.53%) - LeetSync
+
 <p>Given an integer array <code>nums</code>, find a <span data-keyword="subarray-nonempty">subarray</span> that has the largest product, and return <em>the product</em>.</p>
 
 <p>The test cases are generated so that the answer will fit in a <strong>32-bit</strong> integer.</p>
