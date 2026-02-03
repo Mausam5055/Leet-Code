@@ -1,3 +1,5 @@
+Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+
 <p>Given a <strong>non-empty</strong>&nbsp;array of integers <code>nums</code>, every element appears <em>twice</em> except for one. Find that single one.</p>
 
 <p>You must&nbsp;implement a solution with a linear runtime complexity and use&nbsp;only constant&nbsp;extra space.</p>
