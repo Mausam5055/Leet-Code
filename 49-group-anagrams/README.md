@@ -1,3 +1,5 @@
+Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+
 <p>Given an array of strings <code>strs</code>, group the <span data-keyword="anagram">anagrams</span> together. You can return the answer in <strong>any order</strong>.</p>
 
 <p>&nbsp;</p>
