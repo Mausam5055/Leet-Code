@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 13.2 MB (77.07%) - LeetSync
 
 <p>You are given an <code>m x n</code> integer matrix <code>matrix</code> with the following two properties:</p>
 
