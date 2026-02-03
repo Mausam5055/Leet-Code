@@ -1,3 +1,5 @@
+Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+
 <p>We can scramble a string s to get a string t using the following algorithm:</p>
 
 <ol>
