@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 44.6 MB (64.22%) - LeetSync
 
 <p>A <strong>permutation</strong> of an array of integers is an arrangement of its members into a sequence or linear order.</p>
 

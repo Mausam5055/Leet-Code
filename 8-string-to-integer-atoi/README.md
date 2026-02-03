@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 17.8 MB (58.47%) - LeetSync
 
 <p>Implement the <code>myAtoi(string s)</code> function, which converts a string to a 32-bit signed integer.</p>
 

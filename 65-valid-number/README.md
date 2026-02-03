@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 3 ms (12.77%) | Memory: 8.1 MB (61.03%) - LeetSync
 
 <p>Given a string <code>s</code>, return whether <code>s</code> is a <strong>valid number</strong>.<br />
 <br />

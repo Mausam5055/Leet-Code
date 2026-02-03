@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 3 ms (83.95%) | Memory: 9.6 MB (90.43%) - LeetSync
 
 <p>The <strong>count-and-say</strong> sequence is a sequence of digit strings defined by the recursive formula:</p>
 

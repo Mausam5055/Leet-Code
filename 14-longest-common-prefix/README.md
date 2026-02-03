@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 17.9 MB (59.16%) - LeetSync
 
 <p>Write a function to find the longest common prefix string amongst an array of strings.</p>
 

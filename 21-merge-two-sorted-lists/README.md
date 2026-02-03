@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 0 ms (100.00%) | Memory: 44.1 MB (84.98%) - LeetSync
 
 <p>You are given the heads of two sorted linked lists <code>list1</code> and <code>list2</code>.</p>
 

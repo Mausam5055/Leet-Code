@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 52 ms (93.35%) | Memory: 8.7 MB (89.42%) - LeetSync
 
 <p>Write a program to solve a Sudoku puzzle by filling the empty cells.</p>
 
