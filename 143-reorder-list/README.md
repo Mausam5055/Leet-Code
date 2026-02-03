@@ -1,4 +1,4 @@
-Time: X ms (XX.XX%) | Memory: XX.X MB (XX.XX%) - LeetSync
+Time: 2 ms (89.47%) | Memory: 49.5 MB (23.22%) - LeetSync
 
 <p>You are given the head of a singly linked-list. The list can be represented as:</p>
 
