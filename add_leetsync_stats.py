@@ -25,6 +25,45 @@ import os
 import re
 import json
 import argparse
+import subprocess
+
+def run_command(command, cwd=None):
+    """Run a shell command."""
+    try:
+        result = subprocess.run(
+            command, 
+            cwd=cwd, 
+            shell=True, 
+            capture_output=True, 
+            text=True
+        )
+        return result.returncode == 0, result.stdout, result.stderr
+    except Exception as e:
+        return False, "", str(e)
+
+def git_commit_folder(folder_path, message):
+    """
+    Stage and commit a specific folder with the given message.
+    """
+    # 1. Add the folder
+    success, _, err = run_command(f'git add "{folder_path}"')
+    if not success:
+        print(f"    ⚠ Git add failed: {err.strip()}")
+        return False
+
+    # 2. Commit with message
+    # escape double quotes in message just in case
+    safe_message = message.replace('"', '\\"')
+    success, out, err = run_command(f'git commit -m "{safe_message}"')
+    
+    if success:
+        return True
+    else:
+        if "nothing to commit" in out or "nothing to commit" in err:
+            print("    ○ Nothing to commit")
+        else:
+            print(f"    ⚠ Git commit failed: {err.strip()}")
+        return False
 
 def update_readme_with_stats(readme_path, time_ms, time_percent, memory_mb, memory_percent):
     """
@@ -78,7 +117,7 @@ def create_desktop_ini(folder_path, description):
         print(f"  ⚠ Could not create desktop.ini: {e}")
         return False
 
-def process_folders(stats_dict=None, use_placeholder=True):
+def process_folders(stats_dict=None, use_placeholder=True, do_commit=False):
     """
     Process all problem folders and update them with stats.
     """
@@ -87,6 +126,7 @@ def process_folders(stats_dict=None, use_placeholder=True):
     print("="*70)
     
     updated_count = 0
+    committed_count = 0
     skipped_count = 0
     
     # Get all directories
@@ -134,15 +174,23 @@ def process_folders(stats_dict=None, use_placeholder=True):
         # Create desktop.ini for Windows Explorer tooltip
         create_desktop_ini(folder_path, description)
         
+        # Git Commit
+        if do_commit:
+            if git_commit_folder(folder, description):
+                print(f"  ✓ Committed changes")
+                committed_count += 1
+        
         updated_count += 1
         print()
     
     print("="*70)
     print(f"\n📊 Summary:")
-    print(f"   ✓ Updated: {updated_count} folders")
+    print(f"   ✓ Updated:   {updated_count} folders")
+    if do_commit:
+        print(f"   ✓ Committed: {committed_count} folders")
     if skipped_count > 0:
-        print(f"   ⚠ Skipped: {skipped_count} folders")
-    print(f"   📂 Total:   {updated_count + skipped_count} folders\n")
+        print(f"   ⚠ Skipped:   {skipped_count} folders")
+    print(f"   📂 Total:     {updated_count + skipped_count} folders\n")
 
 def create_sample_stats_file():
     """
@@ -190,6 +238,11 @@ def main():
         action='store_true',
         help='Create a sample stats.json file'
     )
+    parser.add_argument(
+        '--commit',
+        action='store_true',
+        help='Git commit each folder with the stats message'
+    )
     
     args = parser.parse_args()
     
@@ -222,15 +275,17 @@ def main():
     print("\nThis script will:")
     print("  1. Update README.md files with LeetSync stats header")
     print("  2. Create desktop.ini files for folder tooltips (Windows)")
+    if args.commit:
+        print("  3. git add & commit each folder with stats message")
     
     if stats_dict:
-        print(f"  3. Using stats from '{args.stats}'")
+        print(f"  Using stats from '{args.stats}'")
     else:
-        print("  3. Using placeholder values (you can manually update later)")
+        print("  Using placeholder values (you can manually update later)")
     
     response = input("\n❓ Continue? (y/n): ").strip().lower()
     if response == 'y':
-        process_folders(stats_dict, args.placeholder)
+        process_folders(stats_dict, args.placeholder, args.commit)
         print("✅ Done!\n")
     else:
         print("\n❌ Aborted.\n")
