@@ -1,19 +1,25 @@
 class Solution {
     public int[] getNoZeroIntegers(int n) {
+        // Iterate a from 1 up to n
         for (int a = 1; a < n; a++) {
             int b = n - a;
-            if (isNoZero(a) && isNoZero(b)) {
+            
+            // Check if both a and b are "No-Zero" integers
+            if (!hasZero(a) && !hasZero(b)) {
                 return new int[]{a, b};
             }
         }
-        return new int[0]; // Guaranteed not to happen
+        return new int[]{}; // Should not be reached per problem constraints
     }
 
-    private boolean isNoZero(int num) {
+    // Helper method to check if a number contains the digit '0'
+    private boolean hasZero(int num) {
         while (num > 0) {
-            if (num % 10 == 0) return false;
+            if (num % 10 == 0) {
+                return true; // Found a zero
+            }
             num /= 10;
         }
-        return true;
+        return false;
     }
 }
