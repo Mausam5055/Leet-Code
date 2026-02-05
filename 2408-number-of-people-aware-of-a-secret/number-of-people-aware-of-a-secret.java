@@ -1,35 +1,36 @@
 class Solution {
     public int peopleAwareOfSecret(int n, int delay, int forget) {
-        long MOD = 1_000_000_007;
-        long[] dp = new long[n + 1]; // dp[i] = number of people who discovered the secret on day i
-        dp[1] = 1;
+        long MOD = 1_000_000_007L;
         
-        long sharing = 0; // Number of people currently sharing the secret
+        long[] dp = new long[n + 1];
+        dp[1] = 1; // Day 1: first person
         
-        for (int i = 2; i <= n; i++) {
-            // 1. Add people who start sharing today (discovered it 'delay' days ago)
-            if (i - delay >= 1) {
-                sharing = (sharing + dp[i - delay]) % MOD;
+        long sharing = 0; // People who can share on current day
+        
+        for (int day = 2; day <= n; day++) {
+            
+            // People who START sharing today
+            if (day - delay >= 1) {
+                sharing = (sharing + dp[day - delay]) % MOD;
             }
             
-            // 2. Remove people who forget today (discovered it 'forget' days ago)
-            if (i - forget >= 1) {
-                sharing = (sharing - dp[i - forget] + MOD) % MOD;
+            // People who FORGET today (stop sharing)
+            if (day - forget >= 1) {
+                sharing = (sharing - dp[day - forget] + MOD) % MOD;
             }
             
-            // 3. The current sharers tell new people
-            dp[i] = sharing;
+            // New people who learn today
+            dp[day] = sharing;
         }
         
-        // Calculate total people who still know the secret
-        // (Everyone who discovered it in the last 'forget' days)
-        long totalAware = 0;
-        for (int i = n - forget + 1; i <= n; i++) {
-            if (i >= 1) {
-                totalAware = (totalAware + dp[i]) % MOD;
+        // Count people who still remember on day n
+        long result = 0;
+        for (int day = n - forget + 1; day <= n; day++) {
+            if (day >= 1) {
+                result = (result + dp[day]) % MOD;
             }
         }
         
-        return (int) totalAware;
+        return (int) result;
     }
 }
