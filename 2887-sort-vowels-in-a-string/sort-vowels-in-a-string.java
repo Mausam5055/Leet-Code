@@ -2,34 +2,36 @@ import java.util.*;
 
 class Solution {
     public String sortVowels(String s) {
-        Set<Character> vowelsSet = new HashSet<>(
-            Arrays.asList('a','e','i','o','u','A','E','I','O','U')
-        );
-
+        // 1. Collect all vowels from the string
         List<Character> vowels = new ArrayList<>();
-
-        // Step 1: Collect vowels
         for (char c : s.toCharArray()) {
-            if (vowelsSet.contains(c)) {
+            if (isVowel(c)) {
                 vowels.add(c);
             }
         }
-
-        // Step 2: Sort vowels by ASCII
+        
+        // 2. Sort the vowels by ASCII value
         Collections.sort(vowels);
-
-        // Step 3: Rebuild string
+        
+        // 3. Reconstruct the string
         StringBuilder result = new StringBuilder();
-        int idx = 0;
-
+        int vowelIndex = 0;
+        
         for (char c : s.toCharArray()) {
-            if (vowelsSet.contains(c)) {
-                result.append(vowels.get(idx++));
+            if (isVowel(c)) {
+                // Place the next sorted vowel
+                result.append(vowels.get(vowelIndex++));
             } else {
+                // Place the original consonant
                 result.append(c);
             }
         }
-
+        
         return result.toString();
+    }
+    
+    // Helper method to check if a char is a vowel
+    private boolean isVowel(char c) {
+        return "aeiouAEIOU".indexOf(c) != -1;
     }
 }
