@@ -11,9 +11,9 @@ class Solution {
         int maxConsonant = 0;
 
         for (int i = 0; i < 26; i++) {
-            char ch = (char)(i + 'a');
+            char ch = (char) (i + 'a');
 
-            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+            if (isVowel(ch)) {
                 maxVowel = Math.max(maxVowel, freq[i]);
             } else {
                 maxConsonant = Math.max(maxConsonant, freq[i]);
@@ -21,5 +21,9 @@ class Solution {
         }
 
         return maxVowel + maxConsonant;
+    }
+
+    private boolean isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
     }
 }
