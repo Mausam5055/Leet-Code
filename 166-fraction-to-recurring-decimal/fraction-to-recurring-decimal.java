@@ -9,7 +9,6 @@ class Solution {
             result.append("-");
         }
 
-        // Use long to prevent overflow
         long num = Math.abs((long) numerator);
         long den = Math.abs((long) denominator);
 
@@ -26,7 +25,7 @@ class Solution {
 
         while (remainder != 0) {
 
-            // If repeating remainder found
+            // Repeating detected
             if (map.containsKey(remainder)) {
                 int index = map.get(remainder);
                 result.insert(index, "(");
