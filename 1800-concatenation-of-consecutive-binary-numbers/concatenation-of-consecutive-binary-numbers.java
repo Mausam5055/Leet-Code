@@ -1,0 +1,19 @@
+class Solution {
+    public int concatenatedBinary(int n) {
+        long res = 0;
+        int MOD = 1_000_000_007;
+        int bits = 0;
+
+        for (int i = 1; i <= n; i++) {
+
+            // if i is power of 2 → bit length increases
+            if ((i & (i - 1)) == 0) {
+                bits++;
+            }
+
+            res = ((res << bits) | i) % MOD;
+        }
+
+        return (int) res;
+    }
+}
