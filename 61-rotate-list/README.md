@@ -1,6 +1,4 @@
-Time: 0 ms (100.00%) | Memory: 16.4 MB (63.18%) - LeetSync
-
-<p>Given the <code>head</code> of a linked&nbsp;list, rotate the list to the right by <code>k</code> places.</p>
+<h2><a href="https://leetcode.com/problems/rotate-list">Rotate List</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>Given the <code>head</code> of a linked&nbsp;list, rotate the list to the right by <code>k</code> places.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
