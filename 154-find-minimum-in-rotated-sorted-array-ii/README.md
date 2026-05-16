@@ -1,6 +1,4 @@
-Time: 0 ms (100.00%) | Memory: 45 MB (31.25%) - LeetSync
-
-<p>Suppose an array of length <code>n</code> sorted in ascending order is <strong>rotated</strong> between <code>1</code> and <code>n</code> times. For example, the array <code>nums = [0,1,4,4,5,6,7]</code> might become:</p>
+<h2><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii">Find Minimum in Rotated Sorted Array II</a></h2> <img src='https://img.shields.io/badge/Difficulty-Hard-red' alt='Difficulty: Hard' /><hr><p>Suppose an array of length <code>n</code> sorted in ascending order is <strong>rotated</strong> between <code>1</code> and <code>n</code> times. For example, the array <code>nums = [0,1,4,4,5,6,7]</code> might become:</p>
 
 <ul>
 	<li><code>[4,5,6,7,0,1,4]</code> if it was rotated <code>4</code> times.</li>
