@@ -9,17 +9,17 @@ public:
         int cnt = 0;
 
         for (int i = 1; i < n - 1; i++) {
-            if ((s[i] > s[i - 1] && s[i] > s[i + 1]) ||
-                (s[i] < s[i - 1] && s[i] < s[i + 1])) {
+            if (s[i] > s[i - 1] && s[i] > s[i + 1])
                 cnt++;
-            }
+            else if (s[i] < s[i - 1] && s[i] < s[i + 1])
+                cnt++;
         }
 
         return cnt;
     }
 
-    int totalWaviness(int num1, int num2) {
-        int ans = 0;
+    long long totalWaviness(int num1, int num2) {
+        long long ans = 0;
 
         for (int x = num1; x <= num2; x++) {
             ans += waviness(x);
