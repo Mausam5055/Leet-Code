@@ -3,17 +3,16 @@ public:
     bool areSimilar(vector<vector<int>>& mat, int k) {
         int m = mat.size();
         int n = mat[0].size();
-
         k %= n;
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-
-                if (i % 2 == 0) { // even row -> left shift
+                if (i % 2 == 0) {
+                    // Even row: left shift
                     if (mat[i][j] != mat[i][(j + k) % n])
                         return false;
-                } 
-                else { // odd row -> right shift
+                } else {
+                    // Odd row: right shift
                     if (mat[i][j] != mat[i][(j - k + n) % n])
                         return false;
                 }
