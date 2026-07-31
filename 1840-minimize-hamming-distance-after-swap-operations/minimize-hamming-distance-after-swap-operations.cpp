@@ -1,57 +1,68 @@
 class Solution {
-public:
-    vector<int> parent, rankv;
+    vector<int> parent, rank;
 
     int find(int x) {
-        if (parent[x] == x) return x;
-        return parent[x] = find(parent[x]);
+        if (parent[x] != x)
+            parent[x] = find(parent[x]);
+
+        return parent[x];
     }
 
     void unite(int a, int b) {
         a = find(a);
         b = find(b);
-        if (a == b) return;
 
-        if (rankv[a] < rankv[b])
+        if (a == b)
+            return;
+
+        if (rank[a] < rank[b])
             swap(a, b);
 
         parent[b] = a;
-        if (rankv[a] == rankv[b])
-            rankv[a]++;
+
+        if (rank[a] == rank[b])
+            rank[a]++;
     }
 
-    int minimumHammingDistance(vector<int>& source, vector<int>& target,
+public:
+    int minimumHammingDistance(vector<int>& source,
+                               vector<int>& target,
                                vector<vector<int>>& allowedSwaps) {
 
         int n = source.size();
 
         parent.resize(n);
-        rankv.assign(n, 0);
+        rank.resize(n, 0);
 
         for (int i = 0; i < n; i++)
             parent[i] = i;
 
-        for (auto &e : allowedSwaps)
-            unite(e[0], e[1]);
+        // Connect all swappable indices
+        for (auto &swap : allowedSwaps) {
+            unite(swap[0], swap[1]);
+        }
 
-        unordered_map<int, vector<int>> groups;
+        // Store frequencies of source values
+        // inside each connected component
+        unordered_map<int, unordered_map<int, int>> freq;
 
-        for (int i = 0; i < n; i++)
-            groups[find(i)].push_back(i);
+        for (int i = 0; i < n; i++) {
+            int root = find(i);
+            freq[root][source[i]]++;
+        }
 
         int ans = 0;
 
-        for (auto &g : groups) {
-            unordered_map<int, int> freq;
+        // Try matching target values
+        for (int i = 0; i < n; i++) {
 
-            for (int idx : g.second)
-                freq[source[idx]]++;
+            int root = find(i);
 
-            for (int idx : g.second) {
-                if (freq[target[idx]] > 0)
-                    freq[target[idx]]--;
-                else
-                    ans++;
+            if (freq[root][target[i]] > 0) {
+                freq[root][target[i]]--;
+            }
+            else {
+                ans++;
             }
         }
 
