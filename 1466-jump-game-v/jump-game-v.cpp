@@ -1,22 +1,24 @@
 class Solution {
 public:
     vector<int> dp;
-    int n;
 
     int dfs(int i, vector<int>& arr, int d) {
-        if (dp[i] != -1) return dp[i];
+        if (dp[i] != -1)
+            return dp[i];
 
-        int ans = 1; // count current index
+        int ans = 1;
 
-        // Left jumps
+        // Left
         for (int j = i - 1; j >= max(0, i - d); j--) {
-            if (arr[j] >= arr[i]) break;
+            if (arr[j] >= arr[i])
+                break;
             ans = max(ans, 1 + dfs(j, arr, d));
         }
 
-        // Right jumps
-        for (int j = i + 1; j <= min(n - 1, i + d); j++) {
-            if (arr[j] >= arr[i]) break;
+        // Right
+        for (int j = i + 1; j <= min((int)arr.size() - 1, i + d); j++) {
+            if (arr[j] >= arr[i])
+                break;
             ans = max(ans, 1 + dfs(j, arr, d));
         }
 
@@ -24,15 +26,14 @@ public:
     }
 
     int maxJumps(vector<int>& arr, int d) {
-        n = arr.size();
+        int n = arr.size();
         dp.assign(n, -1);
 
-        int result = 1;
+        int ans = 1;
 
-        for (int i = 0; i < n; i++) {
-            result = max(result, dfs(i, arr, d));
-        }
+        for (int i = 0; i < n; i++)
+            ans = max(ans, dfs(i, arr, d));
 
-        return result;
+        return ans;
     }
 };
