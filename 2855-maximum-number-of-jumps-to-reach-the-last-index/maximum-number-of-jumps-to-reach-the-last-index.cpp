@@ -4,14 +4,22 @@ public:
         int n = nums.size();
 
         vector<int> dp(n, -1);
+
+        // We start at index 0
         dp[0] = 0;
 
-        for (int i = 1; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                long long diff = 1LL * nums[i] - nums[j];
+        for (int i = 0; i < n; i++) {
 
-                if (abs(diff) <= target && dp[j] != -1) {
-                    dp[i] = max(dp[i], dp[j] + 1);
+            // If index i cannot be reached, skip it
+            if (dp[i] == -1)
+                continue;
+
+            // Try jumping from i to every index after it
+            for (int j = i + 1; j < n; j++) {
+
+                if (abs(nums[j] - nums[i]) <= target) {
+
+                    dp[j] = max(dp[j], dp[i] + 1);
                 }
             }
         }
