@@ -1,20 +1,29 @@
+#include <vector>
+
+using namespace std;
+
 class Solution {
 public:
     vector<int> pivotArray(vector<int>& nums, int pivot) {
-        vector<int> less, equal, greater;
-
-        for (int num : nums) {
-            if (num < pivot)
-                less.push_back(num);
-            else if (num == pivot)
-                equal.push_back(num);
-            else
-                greater.push_back(num);
+        int n = nums.size();
+        // Initialize answer array with the pivot value
+        vector<int> ans(n, pivot);
+        
+        int left = 0;
+        int right = n - 1;
+        
+        // Single pass reading from both ends
+        for (int i = 0, j = n - 1; i < n; ++i, --j) {
+            // Place smaller elements from the left
+            if (nums[i] < pivot) {
+                ans[left++] = nums[i];
+            }
+            // Place larger elements from the right
+            if (nums[j] > pivot) {
+                ans[right--] = nums[j];
+            }
         }
-
-        less.insert(less.end(), equal.begin(), equal.end());
-        less.insert(less.end(), greater.begin(), greater.end());
-
-        return less;
+        
+        return ans;
     }
 };
