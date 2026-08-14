@@ -1,21 +1,32 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
 class Solution {
 public:
     int numberOfSpecialChars(string word) {
-        unordered_set<char> lower, upper;
-
-        for (char ch : word) {
-            if (islower(ch))
-                lower.insert(ch);
-            else
-                upper.insert(tolower(ch));
+        // Arrays to store presence of lowercase and uppercase letters
+        vector<bool> lower(26, false);
+        vector<bool> upper(26, false);
+        
+        for (char c : word) {
+            if (c >= 'a' && c <= 'z') {
+                lower[c - 'a'] = true;
+            } else if (c >= 'A' && c <= 'Z') {
+                upper[c - 'A'] = true;
+            }
         }
-
-        int count = 0;
-        for (char ch : lower) {
-            if (upper.count(ch))
-                count++;
+        
+        int special_count = 0;
+        
+        // Count letters that have both cases present
+        for (int i = 0; i < 26; ++i) {
+            if (lower[i] && upper[i]) {
+                special_count++;
+            }
         }
-
-        return count;
+        
+        return special_count;
     }
 };
