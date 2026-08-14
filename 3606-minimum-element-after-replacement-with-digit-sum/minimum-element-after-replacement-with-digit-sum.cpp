@@ -1,19 +1,27 @@
+#include <vector>
+#include <algorithm>
+#include <climits>
+
+using namespace std;
+
 class Solution {
 public:
     int minElement(vector<int>& nums) {
-        int ans = INT_MAX;
-
+        int min_val = INT_MAX;
+        
         for (int num : nums) {
-            int sum = 0;
-
+            int current_sum = 0;
+            
+            // Calculate the sum of the digits
             while (num > 0) {
-                sum += num % 10;
+                current_sum += num % 10;
                 num /= 10;
             }
-
-            ans = min(ans, sum);
+            
+            // Track the minimum digit sum found so far
+            min_val = min(min_val, current_sum);
         }
-
-        return ans;
+        
+        return min_val;
     }
 };
