@@ -1,18 +1,24 @@
 class Solution {
 public:
     vector<int> sequentialDigits(int low, int high) {
-        vector<int> ans;
-
-        for (int start = 1; start <= 9; start++) {
-            int num = 0;
-            for (int digit = start; digit <= 9; digit++) {
-                num = num * 10 + digit;
-                if (num >= low && num <= high)
-                    ans.push_back(num);
+        string digits = "123456789";
+        vector<int> result;
+        
+        // Length of the sequential numbers can range from 2 to 9
+        for (int length = 2; length <= 9; length++) {
+            // Sliding window starting point
+            for (int start = 0; start <= 9 - length; start++) {
+                // Extract the substring and convert to integer
+                string sub = digits.substr(start, length);
+                int num = stoi(sub);
+                
+                // If it's within bounds, add it to the result
+                if (num >= low && num <= high) {
+                    result.push_back(num);
+                }
             }
         }
-
-        sort(ans.begin(), ans.end());
-        return ans;
+        
+        return result;
     }
 };
