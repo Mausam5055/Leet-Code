@@ -1,81 +1,99 @@
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
 class Solution {
 public:
+    // Renamed to match LeetCode's expected function signature
     vector<int> pathExistenceQueries(int n, vector<int>& nums, int maxDiff, vector<vector<int>>& queries) {
-        vector<pair<int,int>> arr;
-        for(int i = 0; i < n; i++) {
-            arr.push_back({nums[i], i});
-        }
-
-        sort(arr.begin(), arr.end());
-
-        vector<int> comp(n), pos(n);
-        int cid = 0;
-
-        comp[arr[0].second] = cid;
-        pos[arr[0].second] = 0;
-
-        // Group into connected components
-        for(int i = 1; i < n; i++) {
-            if(arr[i].first - arr[i-1].first > maxDiff) {
-                cid++;
-            }
-            comp[arr[i].second] = cid;
-            pos[arr[i].second] = i;
-        }
-
-        // up[i][k] stores the furthest sorted index reachable from index i in 2^k jumps
-        vector<vector<int>> up(n, vector<int>(20));
+        // 1. Extract and sort unique values from nums
+        vector<int> A = nums;
+        sort(A.begin(), A.end());
+        A.erase(unique(A.begin(), A.end()), A.end());
         
-        int r = 0;
-        // Base case: furthest we can reach in 2^0 = 1 jump
-        for(int i = 0; i < n; i++) {
-            while(r + 1 < n && arr[r + 1].first - arr[i].first <= maxDiff) {
-                r++;
-            }
-            up[i][0] = r;
-        }
-
-        // Fill the binary lifting table
-        for(int k = 1; k < 20; k++) {
-            for(int i = 0; i < n; i++) {
-                up[i][k] = up[up[i][k-1]][k-1];
+        int m = A.size();
+        
+        // 2. Identify Connected Components
+        vector<int> comp(m, 0);
+        for (int i = 1; i < m; ++i) {
+            if (A[i] - A[i - 1] > maxDiff) {
+                comp[i] = comp[i - 1] + 1; // Gap too large, new component
+            } else {
+                comp[i] = comp[i - 1];     // Same component
             }
         }
-
+        
+        // 3. Setup Binary Lifting table
+        int LOG = 20; // 2^19 > 100,000 limits
+        vector<vector<int>> up(m, vector<int>(LOG, 0));
+        
+        // up[i][0] stores the furthest right index we can reach in 1 jump
+        for (int i = 0; i < m; ++i) {
+            int nxt = upper_bound(A.begin(), A.end(), A[i] + maxDiff) - A.begin() - 1;
+            up[i][0] = nxt;
+        }
+        
+        // Fill the rest of the binary lifting table
+        for (int k = 1; k < LOG; ++k) {
+            for (int i = 0; i < m; ++i) {
+                up[i][k] = up[ up[i][k - 1] ][ k - 1 ];
+            }
+        }
+        
+        // 4. Process Queries
         vector<int> ans;
-        for(auto &q : queries) {
+        ans.reserve(queries.size());
+        
+        for (auto& q : queries) {
             int u = q[0], v = q[1];
             
-            // If it's the exact same node, 0 jumps needed
+            // Base Case 1: Same exact node
             if (u == v) {
                 ans.push_back(0);
                 continue;
             }
-            // If they are isolated in different components, path is impossible
-            if(comp[u] != comp[v]) {
+            
+            int X = nums[u], Y = nums[v];
+            
+            // Base Case 2: Different nodes but they have the exact same value (difference 0 <= maxDiff)
+            if (X == Y) {
+                ans.push_back(1);
+                continue;
+            }
+            
+            // We always jump from the smaller value to the larger value
+            if (X > Y) {
+                swap(X, Y);
+            }
+            
+            // Map the values back to their indices in the sorted unique array A
+            int idxX = lower_bound(A.begin(), A.end(), X) - A.begin();
+            int idxY = lower_bound(A.begin(), A.end(), Y) - A.begin();
+            
+            // If they are in different components, a path is impossible
+            if (comp[idxX] != comp[idxY]) {
                 ans.push_back(-1);
                 continue;
             }
-
-            int p1 = pos[u];
-            int p2 = pos[v];
             
-            // We always jump from the smaller value (left) to larger value (right)
-            if (p1 > p2) swap(p1, p2);
-
+            // Binary Lifting to find the minimum steps
+            int curr = idxX;
             int steps = 0;
-            // Greedily jump forward as far as possible without reaching/passing p2
-            for (int k = 19; k >= 0; k--) {
-                if (up[p1][k] < p2) {
-                    p1 = up[p1][k];
+            
+            for (int k = LOG - 1; k >= 0; --k) {
+                // If taking 2^k steps doesn't reach or pass our target, we take the leap
+                if (up[curr][k] < idxY) {
+                    curr = up[curr][k];
                     steps += (1 << k);
                 }
             }
-            // After the loop, p1 is just shy of p2. One more jump will bridge the gap.
-            steps++;
-            ans.push_back(steps);
+            
+            // `curr` is now at the furthest point strictly less than `idxY`
+            // Taking 1 more step is guaranteed to reach or surpass `idxY`
+            ans.push_back(steps + 1);
         }
-
+        
         return ans;
     }
 };
