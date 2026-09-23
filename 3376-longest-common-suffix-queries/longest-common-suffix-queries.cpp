@@ -1,77 +1,80 @@
+#include <vector>
+#include <string>
+
+using namespace std;
+
 class Solution {
-public:
-
-    struct Node {
-        int child[26];
-        int idx;
-
-        Node() {
-            memset(child, -1, sizeof(child));
-            idx = -1;
+    struct TrieNode {
+        int children[26];
+        int best_idx;
+        
+        TrieNode() {
+            for (int i = 0; i < 26; ++i) {
+                children[i] = -1;
+            }
+            best_idx = -1;
         }
     };
-
-    vector<Node> trie;
-
-    int better(int a, int b, vector<string>& words) {
-        if (a == -1) return b;
-        if (b == -1) return a;
-
-        if (words[a].size() != words[b].size())
-            return words[a].size() < words[b].size() ? a : b;
-
-        return min(a, b);
-    }
-
-    void insert(string &word, int id, vector<string>& words) {
-        int node = 0;
-
-        trie[node].idx = better(trie[node].idx, id, words);
-
-        for (int i = word.size() - 1; i >= 0; i--) {
-            int c = word[i] - 'a';
-
-            if (trie[node].child[c] == -1) {
-                trie[node].child[c] = trie.size();
-                trie.push_back(Node());
+    
+    vector<TrieNode> trie;
+    
+    void updateBest(int u, int index, const vector<string>& container) {
+        if (trie[u].best_idx == -1) {
+            trie[u].best_idx = index;
+        } else {
+            int cur_best = trie[u].best_idx;
+            // Update if the new string is strictly shorter
+            // (Tie-breakers for earlier index are naturally handled because 
+            // we insert in ascending order of indices, and only update on < )
+            if (container[index].length() < container[cur_best].length()) {
+                trie[u].best_idx = index;
             }
-
-            node = trie[node].child[c];
-
-            trie[node].idx = better(trie[node].idx, id, words);
         }
     }
-
-    int query(string &word) {
-        int node = 0;
-
-        for (int i = word.size() - 1; i >= 0; i--) {
+    
+    void insert(const string& word, int index, const vector<string>& container) {
+        int u = 0;
+        updateBest(u, index, container); // Update the root for cases with 0 common suffix matches
+        
+        for (int i = word.length() - 1; i >= 0; --i) {
             int c = word[i] - 'a';
-
-            if (trie[node].child[c] == -1)
-                break;
-
-            node = trie[node].child[c];
+            if (trie[u].children[c] == -1) {
+                trie[u].children[c] = trie.size();
+                trie.emplace_back();
+            }
+            u = trie[u].children[c];
+            updateBest(u, index, container);
         }
-
-        return trie[node].idx;
     }
-
-    vector<int> stringIndices(vector<string>& wordsContainer,
-                              vector<string>& wordsQuery) {
-
-        trie.push_back(Node());
-
-        for (int i = 0; i < wordsContainer.size(); i++) {
+    
+public:
+    vector<int> stringIndices(vector<string>& wordsContainer, vector<string>& wordsQuery) {
+        // Initialize the root of the Trie
+        trie.emplace_back();
+        
+        // Build the reverse Trie
+        for (int i = 0; i < wordsContainer.size(); ++i) {
             insert(wordsContainer[i], i, wordsContainer);
         }
-
+        
         vector<int> ans;
-
-        for (auto &q : wordsQuery) {
-            ans.push_back(query(q));
+        ans.reserve(wordsQuery.size());
+        
+        // Process each query
+        for (const string& q : wordsQuery) {
+            int u = 0;
+            // Trace the query backwards through the Trie
+            for (int i = q.length() - 1; i >= 0; --i) {
+                int c = q[i] - 'a';
+                if (trie[u].children[c] == -1) {
+                    break;
+                }
+                u = trie[u].children[c];
+            }
+            // The node we stop at holds the pre-computed best index
+            ans.push_back(trie[u].best_idx);
         }
-
+        
         return ans;
     }
 };
