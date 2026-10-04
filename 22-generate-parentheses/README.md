@@ -1,6 +1,4 @@
-Time: 1 ms (83.38%) | Memory: 44.2 MB (95.13%) - LeetSync
-
-<p>Given <code>n</code> pairs of parentheses, write a function to <em>generate all combinations of well-formed parentheses</em>.</p>
+<h2><a href="https://leetcode.com/problems/generate-parentheses">Generate Parentheses</a></h2> <img src='https://img.shields.io/badge/Difficulty-Medium-orange' alt='Difficulty: Medium' /><hr><p>Given <code>n</code> pairs of parentheses, write a function to <em>generate all combinations of well-formed parentheses</em>.</p>
 
 <p>&nbsp;</p>
 <p><strong class="example">Example 1:</strong></p>
