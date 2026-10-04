@@ -1,9 +1,19 @@
+#include <vector>
+#include <algorithm>
+
 class Solution {
 public:
-    long long maxTotalValue(vector<int>& nums, int k) {
-        long long mn = *min_element(nums.begin(), nums.end());
-        long long mx = *max_element(nums.begin(), nums.end());
-
-        return 1LL * k * (mx - mn);
+    long long maxTotalValue(std::vector<int>& nums, int k) {
+        int max_val = nums[0];
+        int min_val = nums[0];
+        
+        // Find the global maximum and minimum elements
+        for (int num : nums) {
+            if (num > max_val) max_val = num;
+            if (num < min_val) min_val = num;
+        }
+        
+        // Multiply by k, ensuring we cast to long long to prevent overflow
+        return static_cast<long long>(k) * (max_val - min_val);
     }
 };
