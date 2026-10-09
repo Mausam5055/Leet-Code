@@ -1,25 +1,29 @@
+//translated using AI
 class Solution {
 public:
     string processStr(string s) {
-        string result;
+        string res;
+        int n = s.length();
 
-        for (char ch : s) {
-            if (ch >= 'a' && ch <= 'z') {
-                result.push_back(ch);
-            }
-            else if (ch == '*') {
-                if (!result.empty()) {
-                    result.pop_back();
+        for (int i = 0; i < n; i++) {
+            char ch = s[i];
+
+            if (ch == '*') {
+                if (res.length() != 0) {
+                    res.pop_back();
                 }
-            }
+            } 
             else if (ch == '#') {
-                result += result;
-            }
+                res += res;
+            } 
             else if (ch == '%') {
-                reverse(result.begin(), result.end());
+                reverse(res.begin(), res.end());
+            } 
+            else if (ch >= 'a' && ch <= 'z') {
+                res.push_back(ch);
             }
         }
 
-        return result;
+        return res;
     }
 };
