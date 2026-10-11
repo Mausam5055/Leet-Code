@@ -1,50 +1,40 @@
 class Solution {
-public:
-    static const int MOD = 1e9 + 7;
+    static constexpr int mod = 1000000007;
 
-    long long modPow(long long a, long long b) {
+    long long pow(long long base, int exp) {
         long long res = 1;
-        while (b) {
-            if (b & 1) res = (res * a) % MOD;
-            a = (a * a) % MOD;
-            b >>= 1;
+
+        while (exp) {
+            if (exp & 1)
+                res = res * base % mod;
+
+            base = base * base % mod;
+            exp >>= 1;
         }
+
         return res;
     }
 
+public:
     int assignEdgeWeights(vector<vector<int>>& edges) {
-        int n = edges.size() + 1;
+        int size = edges.size() + 1;
+        vector<vector<int>> arr(size + 1);
 
-        vector<vector<int>> adj(n + 1);
-
-        for (auto &e : edges) {
-            int u = e[0], v = e[1];
-            adj[u].push_back(v);
-            adj[v].push_back(u);
+        for (auto& e : edges) {
+            arr[e[0]].push_back(e[1]);
+            arr[e[1]].push_back(e[0]);
         }
 
-        int maxDepth = 0;
+        auto dfs = [&](this auto&& dfs, int node, int prev) -> int {
+            int res = 0;
 
-        queue<pair<int,int>> q;
-        q.push({1, 0});
+            for (auto& x : arr[node])
+                if (x != prev)
+                    res = max(res, dfs(x, node) + 1);
 
-        vector<int> vis(n + 1, 0);
-        vis[1] = 1;
+            return res;
+        };
 
-        while (!q.empty()) {
-            auto [node, depth] = q.front();
-            q.pop();
-
-            maxDepth = max(maxDepth, depth);
-
-            for (int nei : adj[node]) {
-                if (!vis[nei]) {
-                    vis[nei] = 1;
-                    q.push({nei, depth + 1});
-                }
-            }
-        }
-
-        return (int)modPow(2, maxDepth - 1);
+        return pow(2, dfs(1, 0) - 1);
     }
 };
