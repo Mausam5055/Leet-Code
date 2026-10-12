@@ -1,21 +1,14 @@
 class Solution {
 public:
     int numberOfSubstrings(string s) {
-        int n = s.size();
-        int cnt[3] = {0};
-        int left = 0;
-        int ans = 0;
+        int res = 0;
+        int p[3] = {-1, -1, -1};
 
-        for (int right = 0; right < n; right++) {
-            cnt[s[right] - 'a']++;
-
-            while (cnt[0] > 0 && cnt[1] > 0 && cnt[2] > 0) {
-                ans += (n - right);
-                cnt[s[left] - 'a']--;
-                left++;
-            }
+        for (int i = 0; i < s.length(); i++) {
+            p[(s[i] & 31) - 1] = i;
+            res += min({p[0], p[1], p[2]}) + 1;
         }
 
-        return ans;
+        return res;
     }
 };
