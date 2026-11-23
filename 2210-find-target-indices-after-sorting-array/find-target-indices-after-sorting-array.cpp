@@ -1,19 +1,10 @@
 class Solution {
 public:
     vector<int> targetIndices(vector<int>& nums, int target) {
-        int cntLess = 0, cntGr = 0;
-        for(auto it : nums){
-            if(it < target){
-                cntLess++;
-            }else if(it > target){
-                cntGr++;
-            }
-        }
-        vector<int> sol;
-        int n = nums.size() - cntGr - cntLess;
-        for(int i = 0; i < n; i++){
-            sol.push_back(i + cntLess);
-        }
-        return sol;
+        int left = ranges::count_if(nums, [&](int x) { return x < target; });  // bisect_left: the values that come before the targets
+        int right = ranges::count_if(nums, [&](int x) { return x <= target; });  // bisect_right: the values up to the last target
+        vector<int> indices(right - left);
+        iota(indices.begin(), indices.end(), left);
+        return indices;
     }
 };
